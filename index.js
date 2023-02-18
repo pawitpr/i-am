@@ -2,6 +2,9 @@ const WebSocket = require('ws')
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
 require('dotenv').config()
+const express = require('express')
+const app = express();
+const port = 3000
 
 const client = new Discord.Client({
     intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES]
@@ -65,7 +68,7 @@ client.once('ready', () => {
 })
 
 client.on('messageCreate', message => {
-    if (message.author.bot || message.channel.id != process.env.DISCORD_CHANNEL_ID || !bot) return
+    if (message.author.bot || message.channel.id != "1076275488047243396" || !bot) return
 
     body.text += `\n${bot.userLabel}: ${message}\n${bot.botLabel}:`
     message.channel.sendTyping()
@@ -73,8 +76,8 @@ client.on('messageCreate', message => {
     fetch("https://model-api-shdxwd54ta-nw.a.run.app/generate/gptj", {
         "headers": {
             "content-type": "application/json",
-            "developer_key": process.env.CHAI_DEV_KEY,
-            "developer_uid": process.env.CHAI_DEV_UID,
+            "developer_key": "2sMw-6eDQmQHXn_1WVVq6vUt5kpJZRXkEwHW6VBxMWI6g3KO03hHTDmbKEBp1DpRGyoz3Jo-Lb4t0RW-AjmeCw", // dev 
+            "developer_uid": "F8hXeIh55BRG0eNOGDD1C8wqel83",
         },
         "body": JSON.stringify(body),
         "method": "POST"
@@ -92,4 +95,9 @@ client.on('messageCreate', message => {
     })
 })
 
-client.login(process.env.DISCORD_BOT_TOKEN)
+client.login("MTA3NTAzNjA5MDMzMjg4OTExMA.GygbAE.fdnX6ElEGbWvSn3difEfQf53Q4-Y-srhwayUvg")
+app.get('/', (req, res) => res.send('Works!'))
+
+app.listen(port, () =>
+console.log(`Your app is listening a http://localhost:${port}`)
+);
